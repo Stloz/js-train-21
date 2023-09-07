@@ -280,11 +280,35 @@ class Band {
  */
 class Performance {
   // Об'являємо приватні поля #band; #location; #date;
+  #band = null;
+  #location = null;
+  #date = null;
   // Створюємо конструктор з трьома вхідними параметрами: #band, #location та #date
+  constructor(band, location, date) {
+    this.#band = band;
+    this.#location = location;
+    this.#date = date;
+  }
   // Створюємо getter для #band, що повертає приватну властивість #band
+  get band() {
+    return this.#band;
+  }
   // Створюємо getter для #location, що повертає приватну властивість #location
+  get location() {
+    return this.#location;
+  }
   // Створюємо getter для #date, що повертає приватну властивість #date
+  get date() {
+    return this.#date;
+  }
   // Визначаємо метод info(), що виводить рядок в консоль `Гурт ${this.#band.name} виступить в ${this.#location} ${this.#date.toLocaleDateString()}`
+  info() {
+    console.log(
+      `Гурт ${this.#band.name} виступить в ${
+        this.#location
+      } ${this.#date.toLocaleDateString()}`
+    );
+  }
 }
 
 /*
@@ -299,11 +323,29 @@ class Performance {
  */
 class Concert extends Performance {
   // Об'являємо приватні поля #ticketPrice;
+  #ticketPrice = null;
   // Створюємо конструктор з чотирма вхідними параметрами: #band, #location, #date та #ticketPrice
-  // використання super для виклику конструктора базового класу
+  constructor(band, location, date, ticketPrice) {
+    // використання super для виклику конструктора базового класу\
+    super(band, location, date);
+    this.#ticketPrice = ticketPrice;
+  }
   // Створюємо getter для #ticketPrice, що повертає приватну властивість #ticketPrice
+  get ticketPrice() {
+    return this.#ticketPrice;
+  }
   // Створюємо setter для #ticketPrice, що дозволяє змінити приватну властивість #ticketPrice
+  set ticketPrice(ticketPrice) {
+    this.#ticketPrice = ticketPrice;
+  }
   // Визначаємо метод info(), що виводить рядок в консоль `Гурт ${super.band.name} виступить в ${super.location} ${super.date.toLocaleDateString()}, ціна квитка ${this.#ticketPrice}`
+  info() {
+    console.log(
+      `Гурт ${super.band.name} виступить в ${
+        super.location
+      } ${super.date.toLocaleDateString()}, ціна квитка ${this.#ticketPrice}`
+    );
+  }
 }
 
 /*
@@ -316,12 +358,33 @@ class Concert extends Performance {
  */
 class Vocalist {
   // Об'являємо приватні поля #name; #band;
+  #name = null;
+  #band = null;
   // Створюємо конструктор з двома вхідними параметрами: #name та #band
+  constructor(name, band) {
+    this.#name = name;
+    this.#band = band;
+  }
   // Створюємо getter для #name, що повертає приватну властивість #name
+  get name() {
+    return this.#name;
+  }
   // Створюємо getter для #band, що повертає приватну властивість #band
+  get band() {
+    this.#band;
+  }
   // Створюємо setter для #name, що дозволяє змінити приватну властивість #name
+  set name(name) {
+    this.#name = name;
+  }
   // Створюємо setter для #band, що дозволяє змінити приватну властивість #band
+  set band(band) {
+    this.#band = band;
+  }
   // Визначаємо метод info(), який виводить інформацію про вокаліста
+  info() {
+    console.log(`Вокаліст ${this.name} є членом гурту ${this.band}`);
+  }
   // Виводимо інформацію у форматі: "Вокаліст ${this.name} є членом гурту ${this.band}"
 }
 
