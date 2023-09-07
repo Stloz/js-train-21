@@ -29,37 +29,48 @@
 
 class Musician {
   // статичне поле count, яке відслідковує кількість музикантів, початкове значення 0
+  static count = 0;
   // Об'являємо приватні поля #name; #instrument;
+  #name = null;
+  #instrument = null;
 
   constructor(name, instrument) {
     // Конструктор приймає два параметри: name та instrument
     // присвоєння вхідного значення name до приватного поля #name
+    this.#name = name;
     // присвоєння вхідного значення instrument до приватного поля #instrument
+    this.#instrument = instrument;
     // збільшення значення статичного поля на 1
+    Musician.count++;
   }
 
   get name() {
     // гетер для приватного поля #name
     // повертає значення приватного поля #name
+    return this.#name;
   }
 
   get instrument() {
     // гетер для приватного поля #instrument
     // повертає значення приватного поля #instrument
+    return this.#instrument;
   }
 
   set name(newName) {
     // сетер для приватного поля #name
     // присвоює нове значення приватному полю #name
+    this.#name = newName;
   }
 
   set instrument(newInstrument) {
     // сетер для приватного поля #instrument
     // присвоює нове значення приватному полю #instrument
+    this.#instrument = newInstrument;
   }
 
   play() {
     // метод, що виводить рядок в консоль <#name> грає на <#instrument>
+    console.log(`${this.name} грає на ${this.instrument}`);
   }
 }
 
@@ -99,15 +110,34 @@ class Musician {
 
 class Guitarist extends Musician {
   // Об'являємо приватні поля #band;
+  #band = null;
   // Конструктор приймає три параметри: name, instrument та band
-  // виклик конструктора батьківського класу super з двома параметрами name, instrument
-  // присвоєння вхідного значення band до приватного поля #band
+  constructor(name, instrument, band) {
+    // виклик конструктора батьківського класу super з двома параметрами name, instrument
+    super(name, instrument);
+    // присвоєння вхідного значення band до приватного поля #band
+    this.#band = band;
+  }
   // гетер для приватного поля #band
-  // повертає значення приватного поля #band
+  get band() {
+    // повертає значення приватного поля #band
+    return this.#band;
+  }
   // сетер для приватного поля #band
-  // присвоює нове значення приватному полю #band
+  set band(band) {
+    // присвоює нове значення приватному полю #band
+    this.#band = band;
+  }
   // метод joinBand, що змінює значення #band, this.#band = band
+  joinBand() {
+    this.#band = this.band;
+  }
   // перевизначений метод play(), що виводить рядок в консоль ${super.name} грає на ${super.instrument} в групі ${this.#band}
+  play() {
+    console.log(
+      `${super.name} грає на ${super.instrument} в групі ${this.#band}`
+    );
+  }
 }
 
 /*
@@ -146,24 +176,47 @@ class Guitarist extends Musician {
 
 class Bassist extends Musician {
   // Об'являємо приватні поля  #band;
+  #band = null;
   // Конструктор приймає три параметри: name, instrument та band
-  // виклик конструктора батьківського класу super з двома параметрами name, instrument
-  // присвоєння вхідного значення band до приватного поля #band
+  constructor(name, instrument, band) {
+    // виклик конструктора батьківського класу super з двома параметрами name, instrument
+    super(name, instrument);
+    // присвоєння вхідного значення band до приватного поля #band
+    this.#band = band;
+  }
   // гетер для приватного поля #band
-  // повертає значення приватного поля #band
+  get band() {
+    // повертає значення приватного поля #band
+    return this.#band;
+  }
   // сетер для приватного поля #band
-  // присвоює нове значення приватному полю #band
+  set band(band) {
+    // присвоює нове значення приватному полю #band
+    this.#band = band;
+  }
   // метод joinBand, що змінює значення #band,this.#band = band
+  joinBand(band) {
+    this.#band = band;
+  }
   // перевизначений метод play(), що виводить рядок в консоль ${super.name} грає на ${super.instrument} в групі ${this.#band}
+  play() {
+    console.log(
+      `${super.name} грає на ${super.instrument} в групі ${this.#band}`
+    );
+  }
 }
 
 // Тут ми використовуємо Object.defineProperty(), щоб додати сетер band до класу Musician після його створення.
-// Перший аргумент - це об'єкт, до якого ми хочемо додати властивість. У цьому випадку це Musician.prototype,
-// тому що ми хочемо додати сетер до всіх екземплярів класу Musician.
-// Другий аргумент - це ім'я властивості, яку ми хочемо додати. У цьому випадку це 'band'.
-// Третій аргумент - це об'єкт, який описує властивість. У цьому випадку ми хочемо додати сетер,
-// тому ми вказуємо функцію, яка буде викликатися при спробі встановити властивість 'band'.  this.band = newBand
-
+Object.defineProperty(Musician.prototype, "band", {
+  // Перший аргумент - це об'єкт, до якого ми хочемо додати властивість. У цьому випадку це Musician.prototype,
+  // тому що ми хочемо додати сетер до всіх екземплярів класу Musician.
+  // Другий аргумент - це ім'я властивості, яку ми хочемо додати. У цьому випадку це 'band'.
+  // Третій аргумент - це об'єкт, який описує властивість. У цьому випадку ми хочемо додати сетер,
+  // тому ми вказуємо функцію, яка буде викликатися при спробі встановити властивість 'band'.  this.band = newBand
+  function(newBand) {
+    this.band = newBand;
+  },
+});
 /*
  * Клас: Band
  * ---------------------------
@@ -175,19 +228,45 @@ class Bassist extends Musician {
 
 class Band {
   // Об'являємо приватні поля #name; #members;
+  #name = null;
+  #members = [];
   /*
    * Створюємо конструктор з двома вхідними параметрами: #name і #members
    * #members - це масив об'єктів, що є екземплярами класу Musician або його нащадків
    */
+  constructor(name, members) {
+    this.#name = name;
+    this.#members = members;
+  }
   // Створюємо getter для #name, що повертає приватну властивість #name
+  get name() {
+    return this.#name;
+  }
   // Створюємо getter для #members, що повертає приватну властивість #members
+  get members() {
+    return this.#members;
+  }
   // Створюємо сетер для #name
+  set name(name) {
+    this.#name = name;
+  }
   // Створюємо метод addMember(), що додає нового учасника до гурту
-  // Перевіряємо чи Musician є прототипом newMember
-  // Ось тут ми використовуємо сетер band класу Musician
-  // До приватного поля #members яке є масивом додаємо мового музиканта
-  // Якщо ні виводимо в консоль повідомлення Новий учасник повинен бути екземпляром класу Musician
+  addMember(newMember) {
+    // Перевіряємо чи Musician є прототипом newMember
+    if (Musician.prototype.isPrototypeOf(newMember)) {
+      // Ось тут ми використовуємо сетер band класу Musician
+      newMember.band = this.#name;
+      // До приватного поля #members яке є масивом додаємо мового музиканта
+      this.#members.push(newMember);
+      // Якщо ні виводимо в консоль повідомлення Новий учасник повинен бути екземпляром класу Musician
+    } else {
+      console.log(`Новий учасник повинен бути екземпляром класу Musician`);
+    }
+  }
   // Створюємо метод playMusic(), за допомогою forEach перебираємо масив і викликаємо метод play() для кожного учасника гурту
+  playMusic() {
+    this.#members.forEach((musician) => musician.play());
+  }
 }
 
 /*
